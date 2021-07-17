@@ -1,0 +1,100 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>MedicalStore</title>
+  </head>
+  <body>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'manage_store' %}">Manage Store</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'manage_medicine' %}">Manage Medicine</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+        </li>
+    </ul>
+
+    <br>
+      <h3 style="text-align:center; margin-bottom:50px; color:green;">Edit Medicine</h3>
+
+      <form method="post" class="container" style="margin-top: 50px; width:500px;">
+        
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label class="form-label">Medicine Name<span class="require">*</span></label>
+            <input type="text" id="medicinename" name="medicinename" value="{{medicine.medicine_name}}" class="form-control" autofocus required="required"> 
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Price<span class="require">*</span></label>
+            <input type="number" id="price" name="price" value="{{medicine.medicine_price}}" class="form-control" autofocus required="required">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Medicine Details<span class="require">*</span></label>  
+            <input type="text" id="medicinedetails" name="medicinedetails" class="form-control" autofocus value="{{medicine.medicine_details}}" required="required">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Quantity<span class="require">*</span></label>
+            <input type="number" id="quantity" name="quantity" value="{{medicine.medicine_quantity}}" class="form-control" autofocus required="required">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Medicine Type<span class="require">*</span></label>
+            <select class="form-control" id="exampleFormControlSelect1" name="medicinetype" value="{{medicine.medicine_type_id}}" required="required">
+                {% for type in medtype %}
+                  {% if type.id == medicine.medicine_type_id %}
+                      <option selected value="{{type.id}}">{{type.medicine_type_name}}</option>
+                    {% else %}
+                      <option value="{{type.id}}">{{type.medicine_type_name}}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>    
+        </div>
+
+        <div class="mb-3"> 
+          <label class="form-label">Store<span class="require">*</span></label>
+          <select class="form-control" id="exampleFormControlSelect1" name="medicinestore" value="{{medicine.store_id}}" required="required">
+            {% for name in storename %}
+              {% if name.id == medicine.store_id %}
+                  <option selected value="{{name.id}}">{{name.store_name}}</option>
+                {% else %}
+                  <option value="{{name.id}}">{{name.store_name}}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Expiry Date<span class="require">*</span></label>
+          <input type="date" id="date" name="date" value="{{medicine.medicine_expiry_date|date:'Y-m-d'}}" class="form-control" autofocus required="required">    
+        </div>
+
+        <div class="mb-3">
+          <a href="{% url 'manage_medicine' %}" class="btn btn-sm btn-primary">BACK</a>
+          <button type="submit" class="btn btn-sm btn-success">Update</button>
+        </div>
+      </form>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    
+  </body>
+</html>
+
+
+
+
